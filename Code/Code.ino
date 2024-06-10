@@ -8,11 +8,11 @@
 #include <LiquidCrystal_I2C.h>
 
 // WiFi credentials
-const char* ssid = "A1-392C2B28";
-const char* password = "togiwogi1807";
+const char* ssid = "Test";
+const char* password = "teststte";
 
 // OpenWeatherMap API
-const char* apiKey = "1054e4026039a886c5cf52e08637adcc";
+const char* apiKey = "teststestset";
 const char* cityID = "2775220";
 String weatherURL = "http://api.openweathermap.org/data/2.5/weather?id=" + String(cityID) + "&appid=" + String(apiKey) + "&units=metric";
 
@@ -27,7 +27,7 @@ String weatherURL = "http://api.openweathermap.org/data/2.5/weather?id=" + Strin
 DHT dht(DHTPIN, DHTTYPE);
 
 // LED strip
-#define NUM_LEDS 8
+#define NUM_LEDS 30
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 // LCD
@@ -154,7 +154,6 @@ void fetchWeatherData() {
       apiHumidity = doc["main"]["humidity"].as<float>();
       apiWeather = String(doc["weather"][0]["description"].as<const char*>());
 
-      setLEDColor(apiTemp);
     } else {
       Serial.println("Error on HTTP request");
     }
@@ -167,7 +166,7 @@ void fetchWeatherData() {
 void displayWeatherData() {
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("Weather: " + apiWeather);
+  lcd.print("W: " + apiWeather);
   lcd.setCursor(0, 1);
   lcd.print("Temp: " + String(apiTemp) + "C");
 }
@@ -180,7 +179,6 @@ void displayLocalData() {
     Serial.println("Failed to read from DHT sensor!");
     lcd.clear();
     lcd.setCursor(0, 0);
-    lcd.print("DHT Error");
     return;
   }
 
@@ -188,6 +186,7 @@ void displayLocalData() {
   lcd.setCursor(0, 0);
   lcd.print("Local Temp: " + String(localTemp) + "C");
   lcd.setCursor(0, 1);
+  setLEDColor(localTemp);
   lcd.print("Humidity: " + String(localHumidity) + "%");
 }
 
