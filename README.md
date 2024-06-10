@@ -1,1 +1,0 @@
-# nwes_abschlussprojekt_wetterstation
